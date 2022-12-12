@@ -19,18 +19,18 @@ module.exports = {
         "react",
         "@typescript-eslint"
     ],
-    rules: {
-        "import/no-default-export": "off",
-        "import/extensions": [
-            "error",
-            "ignorePackages",
+    "rules": {
+        "react/function-component-definition": "off",
+        "import/prefer-default-export": "off",
+        "import/no-default-export": "error",
+        "quotes": [
+            2,
+            "double",
             {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never"
+                "avoidEscape": true
             }
         ],
+        "import/extensions": "off",
         "import/no-unresolved": "off",
         "react/jsx-filename-extension": [
             2,
