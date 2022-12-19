@@ -1,9 +1,6 @@
 import React from "react";
 import "./Target.scss";
-
-export interface TargetChild {
-    targetName: string;
-}
+import { TargetChild } from "../../interfaces/interfaces";
 
 export const Target = ({ targetName }: TargetChild) => (
   <div className={targetName}>

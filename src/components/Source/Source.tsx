@@ -1,9 +1,6 @@
 import React from "react";
 import "./Source.scss";
-
-export interface SourceChild {
-    sourceName: string;
-}
+import { SourceChild } from "../../interfaces/interfaces";
 
 export const Source = ({ sourceName }: SourceChild) => (
   <div className={sourceName}>
