@@ -1,0 +1,12 @@
+[class^=src] {
+  height: 50px;
+  width: 351px;
+  border: 1px solid #847F98;
+  border-radius: 3px;
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=Source.css.map */

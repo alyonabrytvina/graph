@@ -1,0 +1,13 @@
+[class^=act] {
+  height: 25px;
+  width: 89px;
+  border: 1px solid rgba(0, 0, 0, 0.2901960784);
+  border-radius: 9px;
+  color: #847F98;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=Action.css.map */
