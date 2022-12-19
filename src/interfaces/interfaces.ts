@@ -1,12 +1,22 @@
+export interface SourceChild {
+    sourceName: string;
+}
+
+export interface TargetChild {
+    targetName: string;
+}
+
 export interface Source {
     id: string;
     name: string;
+    key?: string;
 }
 
-export interface Action {
+export interface ActionRoot {
     id: string;
     prev: string[];
     next: string;
+    actionIndex?: number;
 }
 
 export interface Target {
@@ -16,12 +26,12 @@ export interface Target {
 
 export interface Transformation {
     sources: Source[];
-    actions: Action[];
+    actions: ActionRoot[];
     target: Target;
 }
 
 export interface Mapping {
     sources: Source[];
-    actions: Action[];
+    actions: ActionRoot[];
     targets: Target[];
 }
