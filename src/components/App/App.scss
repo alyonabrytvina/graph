@@ -1,0 +1,44 @@
+.graph {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  place-items: center;
+
+  &__actions {
+    display: grid;
+    grid-template-areas:
+            "act4 . . ."
+            ". act5 act6 act7";
+    grid-template-columns: repeat(4, 1fr);
+    width: 540px;
+  }
+}
+
+.graph:last-child .graph__actions {
+  gap: 0 70px;
+  margin-bottom: 25px;
+}
+
+.act4 {
+  grid-area: act4;
+}
+
+.act5 {
+  grid-area: act5;
+}
+
+.act6 {
+  grid-area: act6;
+}
+
+.act7 {
+  grid-area: act7;
+}
+
+@media screen and (max-width: 1024px) {
+  .graph {
+    &__actions {
+      width: auto;
+    }
+  }
+}
