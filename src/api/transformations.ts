@@ -1,4 +1,4 @@
-const transformations = [
+export const transformations = [
   {
     sources: [
       {
@@ -52,6 +52,10 @@ const transformations = [
         id: "src3",
         name: "Source3",
       },
+      {
+        id: "src2",
+        name: "Source2",
+      },
     ],
     actions: [
       {
@@ -72,7 +76,7 @@ const transformations = [
       {
         id: "act7",
         prev: ["act5"],
-        text: "trg3",
+        next: "trg3",
       },
     ],
     target: {

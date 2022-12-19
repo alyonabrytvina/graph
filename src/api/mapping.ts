@@ -1,4 +1,4 @@
-const mapping = {
+export const mapping = {
   sources: [
     {
       id: "src1",
