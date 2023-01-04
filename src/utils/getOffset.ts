@@ -33,5 +33,5 @@ export const connect = ({ element, targetElement }: Record<string, HTMLElement>)
 
   const angle = `${Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI)}deg`;
 
-  return `<div style="height: 1px;position:absolute;left:${cx};top:${cy};width:${length}px;background: #000;rotate:${angle};" />`;
+  return `<div class="line" style="height: 0.5px;position:absolute;left:${cx};top:${cy};width:${length}px;background: #000;rotate:${angle};" />`;
 };
