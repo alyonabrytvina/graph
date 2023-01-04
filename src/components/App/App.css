@@ -5,36 +5,45 @@
   place-items: center;
 }
 .graph__actions {
-  display: grid;
-  grid-template-areas: "act4 . . ." ". act5 act6 act7";
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: space-around;
   width: 540px;
+  place-items: start;
+}
+.graph__sources, .graph__targets {
+  width: 100%;
+}
+.graph__targets {
+  display: flex;
+  justify-content: end;
 }
 
-.graph:last-child .graph__actions {
-  gap: 0 70px;
-  margin-bottom: 25px;
+textarea {
+  width: 100%;
+  height: 25vh;
+  outline: none;
+  border: 1px solid;
 }
 
-.act4 {
-  grid-area: act4;
+textarea::-webkit-scrollbar {
+  width: 1em;
 }
 
-.act5 {
-  grid-area: act5;
+textarea::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
-.act6 {
-  grid-area: act6;
-}
-
-.act7 {
-  grid-area: act7;
+textarea::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 20px;
 }
 
 @media screen and (max-width: 1024px) {
   .graph__actions {
     width: auto;
+  }
+  .graph__sources, .graph__target {
+    width: 100%;
   }
 }
 
