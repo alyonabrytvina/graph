@@ -70,12 +70,12 @@ export const transformations = [
       },
       {
         id: "act6",
-        prev: ["act4"],
+        prev: ["act5"],
         next: "act7",
       },
       {
         id: "act7",
-        prev: ["act5"],
+        prev: ["act6"],
         next: "trg3",
       },
     ],
