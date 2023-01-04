@@ -27,6 +27,12 @@ module.exports = {
         "implicit-arrow-linebreak": "off",
         "react/prop-types": "off",
         "no-nested-ternary": "off",
+        "consistent-return": "off",
+        "max-len": "off",
+        "array-callback-return": "off",
+        "no-param-reassign": "off",
+        "no-return-assign": "off",
+        "no-unused-vars": "off",
         "indent": [
             "error",
             2
