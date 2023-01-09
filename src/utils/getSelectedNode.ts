@@ -21,7 +21,7 @@ export const cleanNodes = (graph: HTMLDivElement|Element) => {
     nodes.forEach((child) => {
       if (child.className && child.className !== "line") {
         (child as HTMLElement).style.background = "#fff";
-        (child as HTMLElement).style.color = "#847F98";
+        (child as HTMLElement).style.color = "#000";
       }
     });
   });
