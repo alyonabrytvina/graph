@@ -1,5 +1,5 @@
 import { cleanNodeLines } from "./getTransformation";
-import { SelectedNode } from "../interfaces/interfaces";
+import { SelectedNode, Tree } from "../interfaces/interfaces";
 
 export const getSelectedNode = ({ graph, isSelected }: SelectedNode) =>
   [...graph.children]
@@ -25,4 +25,16 @@ export const cleanNodes = (graph: HTMLDivElement|Element) => {
       }
     });
   });
+};
+
+export const moveBlock = (childNode: HTMLElement, treeNode: Tree) => {
+  const previousElement = childNode?.previousElementSibling! as HTMLElement;
+  if (previousElement) moveBlock(previousElement, treeNode);
+
+  if (previousElement) {
+    childNode.style.alignSelf = "stretch";
+    previousElement.style.alignSelf = "stretch";
+    childNode.style.marginTop = "15px";
+    previousElement.style.marginTop = "15px";
+  }
 };

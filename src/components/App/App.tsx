@@ -12,7 +12,7 @@ import {
   cleanNodeLines,
   getCurrentTransformation,
 } from "../../utils/getTransformation";
-import { cleanNodes, getSelectedNode } from "../../utils/getSelectedNode";
+import { cleanNodes, getSelectedNode, moveBlock } from "../../utils/getSelectedNode";
 import { hasJsonStructure } from "../../utils/hasJsonStructure";
 import { Context } from "../../context/StateWidthProvider";
 
@@ -53,8 +53,11 @@ export const App = () => {
 
   const selectNode = (event: React.MouseEvent<HTMLElement>, index: number) => {
     const parent = ((event.target as HTMLElement).parentNode as HTMLDivElement).parentNode! as HTMLDivElement;
+    const selectedElement = event.target as HTMLElement;
 
     if (parent.className === "graph") { // check for possibilities to select elements only inside graph
+      console.log(`You clicked on ${selectedElement.className}`, selectedElement, `the parent is ${parent.className}`, parent);
+
       const updatedList:NodesList[] = nodeList.map((node) => {
         const { isSelected, nodeIndex } = node;
 
@@ -67,7 +70,7 @@ export const App = () => {
 
       updatedList.forEach(({ isSelected, nodeIndex }) => {
         if (index === nodeIndex) {
-          return getSelectedNode({ graph: parent, isSelected });
+          getSelectedNode({ graph: parent, isSelected });
         }
       });
     }

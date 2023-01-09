@@ -1,7 +1,8 @@
 import {
   ActionItem, Mapping, NodesList,
-  SourceItem, Transformation,
+  SourceItem, Transformation, Tree,
 } from "../interfaces/interfaces";
+import { moveBlock } from "./getSelectedNode";
 
 export const cleanNodeLines = (node: HTMLDivElement|Element) =>
   [...node.children].forEach((childNode) => {
@@ -77,3 +78,16 @@ export const getCurrentTransformation = (value:Mapping) => {
     };
   }
 };
+
+export const getDeepestChildren = (graph:Element, treeNodes: Tree) => [...graph.children].forEach((childNode) => {
+  getDeepestChildren(childNode, treeNodes);
+  const { prev } = treeNodes;
+  prev?.forEach((node) => {
+    if (prev?.length > 1 && !node.startsWith("src")) {
+      if (node === childNode.className) {
+        cleanNodeLines(graph);
+        moveBlock(childNode, treeNodes);
+      }
+    }
+  });
+});
