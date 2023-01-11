@@ -1,8 +1,8 @@
 import React from "react";
 import "./Action.scss";
-import { ActionItem } from "../../interfaces/interfaces";
+import { ActionParams } from "../../interfaces/interfaces";
 
-export const Action = ({ id }: ActionItem) => (
+export const Action = ({ id }: ActionParams) => (
   <div className={id}>
     {id}
   </div>

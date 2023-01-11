@@ -1,8 +1,8 @@
 import React from "react";
 import "./Source.scss";
-import { SourceItem } from "../../interfaces/interfaces";
+import { SourceParams } from "../../interfaces/interfaces";
 
-export const Source = ({ id }: SourceItem) => (
+export const Source = ({ id }: SourceParams) => (
   <div className={id}>
     {id}
   </div>
