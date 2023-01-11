@@ -1,4 +1,4 @@
-const mapping = {
+export const mapping = {
   sources: [
     {
       id: "src1",
@@ -50,18 +50,23 @@ const mapping = {
     },
     {
       id: "act4",
-      prev: ["src2", "act3"],
+      prev: ["act3"],
       next: "act5",
     },
     {
       id: "act5",
-      prev: ["act4"],
+      prev: ["act4", "src2"],
       next: "act6",
     },
     {
       id: "act6",
       prev: ["act5"],
-      text: "trg3",
+      next: "act7",
+    },
+    {
+      id: "act7",
+      prev: ["act6"],
+      next: "trg3",
     },
   ],
 };

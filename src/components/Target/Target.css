@@ -1,0 +1,29 @@
+[class^=trg] {
+  height: 50px;
+  width: 351px;
+  border: 1px solid #847F98;
+  border-radius: 3px;
+  margin-right: 57px;
+  color: #000;
+  display: grid;
+  place-items: center;
+  grid-template-columns: 0 100%;
+}
+
+[class^=trg]::before {
+  content: "";
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #000;
+  margin-right: 1.5px;
+}
+
+@media screen and (max-width: 1024px) {
+  [class^=trg] {
+    height: 30px;
+    width: 251px;
+  }
+}
+
+/*# sourceMappingURL=Target.css.map */

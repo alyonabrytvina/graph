@@ -23,6 +23,21 @@ module.exports = {
         "react/function-component-definition": "off",
         "import/prefer-default-export": "off",
         "import/no-default-export": "error",
+        "react/no-unused-prop-types": "off",
+        "implicit-arrow-linebreak": "off",
+        "react/prop-types": "off",
+        "no-nested-ternary": "off",
+        "consistent-return": "off",
+        "max-len": "off",
+        "array-callback-return": "off",
+        "no-param-reassign": "off",
+        "no-return-assign": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "indent": [
+            "error",
+            2
+        ],
         "quotes": [
             2,
             "double",
