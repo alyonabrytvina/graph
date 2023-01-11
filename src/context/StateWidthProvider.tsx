@@ -1,33 +1,35 @@
 import React, {
-  createContext, PropsWithChildren, useEffect, useState,
+  createContext, PropsWithChildren, useCallback, useEffect, useState,
 } from "react";
-import { InitialValue } from "../interfaces/interfaces";
+import { initialValueStateWidthContextParams, WindowSizeParams } from "../interfaces/interfaces";
 
-const initialValue = {
-  windowWidth: 0,
-  setWindowWidth: () => {},
+const initialValueStateWidthContext = {
+  windowSize: {
+    windowWidth: 0,
+    windowHeight: 0,
+  },
+  setWindowSize: () => {},
 };
 
-export const Context = createContext<InitialValue>(initialValue);
+export const StateWidthContext = createContext<initialValueStateWidthContextParams>(initialValueStateWidthContext);
 
 export const StateWidthProvider = ({ children }: PropsWithChildren<{}>) => {
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowSize, setWindowSize] = useState<WindowSizeParams>({ windowWidth: 0, windowHeight: 0 });
 
-  const updateDimensions = () => {
-    const width = window.innerWidth;
-    setWindowWidth(width);
-  };
+  const updateDimensions = useCallback(() => {
+    const { innerWidth, innerHeight } = window;
+    setWindowSize({ windowWidth: innerWidth, windowHeight: innerHeight });
+  }, [windowSize]);
 
   useEffect(() => {
-    updateDimensions();
     window.addEventListener("resize", updateDimensions);
     return () =>
       window.removeEventListener("resize", updateDimensions);
   }, []);
 
   return (
-    <Context.Provider value={{ windowWidth, setWindowWidth }}>
+    <StateWidthContext.Provider value={{ windowSize, setWindowSize }}>
       { children }
-    </Context.Provider>
+    </StateWidthContext.Provider>
   );
 };
