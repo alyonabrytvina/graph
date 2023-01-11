@@ -1,10 +1,9 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from "react";
-import "./App.scss";
+import "./Main.scss";
 import {
-  MouseEvent,
-  NodesList, TransformationParams,
+  MouseEvent, NodesListParams, TransformationParams,
 } from "../../interfaces/interfaces";
 import {
   cleanNodeLines,
@@ -17,10 +16,10 @@ import { Transformation } from "../Transformation/Transformation";
 
 type SelectNodeType = (event: MouseEvent<HTMLElement>, transformationIndex: number) => void;
 
-export const App = () => {
+export const Main = () => {
   const graphRef = useRef<HTMLDivElement>(null);
 
-  const [nodeList, setNodeList] = useState<NodesList[]>([]);
+  const [nodeList, setNodeList] = useState<NodesListParams[]>([]);
   const [currentTransformations, setCurrentTransformations] = useState<TransformationParams[]>([]);
 
   const [textareaValue, setTextareaValue] = useState<string>("");
@@ -41,13 +40,13 @@ export const App = () => {
         return;
       }
 
-      const {
-        transformations,
-        nodesList,
-      }: { transformations: TransformationParams[]; nodesList: NodesList[] } = getCurrentTransformations(parsedValue)!;
+      const transformations: TransformationParams[] = getCurrentTransformations(parsedValue)!;
 
       setCurrentTransformations(transformations);
-      setNodeList(nodesList);
+      setNodeList(transformations.map((_, index) => ({
+        isSelected: false,
+        nodeIndex: index,
+      })));
     } else {
       setTextareaValue("");
       setCurrentTransformations([]);
@@ -62,7 +61,7 @@ export const App = () => {
       // inside graph
       console.log(`You clicked on ${selectedElement?.className}`, selectedElement, `the parent is ${parent.className}`, parent);
 
-      const updatedList:NodesList[] = nodeList.map((node) => {
+      const updatedList:NodesListParams[] = nodeList.map((node) => {
         const { isSelected, nodeIndex } = node;
 
         return (transformationIndex === nodeIndex) ? {
