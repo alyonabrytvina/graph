@@ -33,6 +33,7 @@ module.exports = {
         "no-param-reassign": "off",
         "no-return-assign": "off",
         "no-unused-vars": "off",
+        "no-shadow": "off",
         "indent": [
             "error",
             2
