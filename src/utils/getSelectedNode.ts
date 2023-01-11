@@ -16,16 +16,16 @@ export const getSelectedNode = ({ graph, isSelected }: SelectedNodeParams): void
 };
 
 export const cleanNodes = (graph: HTMLDivElement| Element): void => {
+  const { white, black } = styles;
   cleanNodeLines(graph);
   const children = [...graph.children];
 
   children.forEach((child: Element) => {
-    if (children.length) {
-      return cleanNodes(child);
-    }
+    cleanNodes(child);
 
-    if (child.className && child.className !== "line") {
-      child.removeAttribute("style");
+    if (child.className && child.className !== "line" && child instanceof HTMLElement) {
+      child.style.background = white;
+      child.style.color = black;
     }
   });
 };
