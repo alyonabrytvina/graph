@@ -3,10 +3,19 @@
   width: 351px;
   border: 1px solid #847F98;
   border-radius: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: #000;
+  display: grid;
+  place-items: center;
+  grid-template-columns: 100% 0;
+}
+
+[class^=src]::after {
+  content: "";
+  height: 4px;
+  width: 4px;
+  border-radius: 50%;
+  background: #000;
+  margin-left: 1.5px;
 }
 
 @media screen and (max-width: 1024px) {
