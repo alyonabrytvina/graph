@@ -53,10 +53,10 @@ export const getTransformations = (mapping: Mapping): Transformation[] => {
   return transformations;
 };
 
-export const getCurrentTransformation = (value:Mapping) => {
+export const getCurrentTransformations = (value:Mapping) => {
   const initialTransformation = getTransformations(value);
   if (initialTransformation) {
-    const transformation: Transformation[] = initialTransformation.map((props) => {
+    const transformations: Transformation[] = initialTransformation.map((props) => {
       const { actions, target, sources } = props;
       const reversedActions = [...actions].reverse();
 
@@ -67,13 +67,13 @@ export const getCurrentTransformation = (value:Mapping) => {
       };
     });
 
-    const nodesList: NodesList[] = transformation.map((node, index) => ({
+    const nodesList: NodesList[] = transformations.map((node, index) => ({
       isSelected: false,
       nodeIndex: index,
     }));
 
     return {
-      transformation,
+      transformations,
       nodesList,
     };
   }
@@ -86,7 +86,8 @@ export const getDeepestChildren = (graph:Element, treeNodes: Tree) => [...graph.
     if (prev?.length > 1 && !node.startsWith("src")) {
       if (node === childNode.className) {
         cleanNodeLines(graph);
-        moveBlock(childNode, treeNodes);
+        const child = childNode as HTMLElement;
+        moveBlock(child, treeNodes);
       }
     }
   });

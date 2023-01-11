@@ -1,37 +1,39 @@
-export interface SourceItem {
+import React from "react";
+
+export interface SourceParams {
     id: string;
     name?: string;
 }
 
-export interface ActionItem {
+export interface ActionParams {
     id: string;
     prev?: string[];
     next?: string;
 }
 
-export interface TargetItem {
+export interface TargetParams {
     id: string;
-    name: string;
+    name?: string;
 }
 
-export interface Transformation {
-    sources: SourceItem[];
-    actions: ActionItem[];
-    target: TargetItem;
+export interface TransformationParams {
+    sources: SourceParams[];
+    actions: ActionParams[];
+    target: TargetParams;
 }
 
 export interface Mapping {
-    sources: SourceItem[];
-    actions: ActionItem[];
-    targets: TargetItem[];
+    sources: SourceParams[];
+    actions: ActionParams[];
+    targets: TargetParams[];
 }
 
-export interface NodesList {
+export interface NodesListParams {
     isSelected: boolean;
     nodeIndex: number;
 }
 
-export interface Tree {
+export interface TreeParams {
     id: string;
     name?: string;
     prev?: string[];
@@ -39,25 +41,34 @@ export interface Tree {
 }
 
 export interface DepthFirstSearch {
-    graph: HTMLCollection;
-    rootNode: TargetItem;
-    tree: Tree[];
+    graph: Array<Element>;
+    rootNode: TargetParams;
+    tree: TreeParams[];
 }
 
-export interface TargetRoot {
-    target: TargetItem
-    sources: SourceItem[]
-    actions: ActionItem[]
-    currentTransformation: Transformation[]
-    graphRef: HTMLDivElement
+export interface SelectedNodeParams {
+    graph: HTMLElement;
+    isSelected: boolean;
 }
 
-export interface SelectedNode {
+export interface WindowSizeParams {
+    windowWidth: number;
+    windowHeight: number;
+}
+
+export interface initialValueStateWidthContextParams {
+    windowSize: WindowSizeParams;
+    setWindowSize: ({ windowWidth, windowHeight }: WindowSizeParams) => void;
+}
+
+export interface MouseEvent<T extends EventTarget> extends React.MouseEvent<HTMLDivElement> {
+    readonly target: T
+}
+
+export interface TransformationRootParams {
+    transformationProps: TransformationParams;
+    currentTransformations: TransformationParams[];
     graph: HTMLDivElement;
-    isSelected: boolean
-}
-
-export interface InitialValue {
-    windowWidth: number
-    setWindowWidth: (width: number) => void
+    transformationIndex: number;
+    selectNode: (event: MouseEvent<HTMLElement>, index: number) => void;
 }
