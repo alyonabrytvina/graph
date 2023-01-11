@@ -1,40 +1,46 @@
-import { cleanNodeLines } from "./getTransformation";
-import { SelectedNode, Tree } from "../interfaces/interfaces";
+import { cleanNodeLines } from "./getTransformations";
+import { SelectedNodeParams, TreeParams } from "../interfaces/interfaces";
+import { styles } from "../constants";
 
-export const getSelectedNode = ({ graph, isSelected }: SelectedNode) =>
-  [...graph.children]
-    .forEach(({ childNodes }) => [...childNodes]
-      .forEach((element) => {
-        (element as HTMLElement).style.background = isSelected ? "#228B22" : "#fff";
-        (element as HTMLElement).style.color = isSelected ? "#fff" : "#000";
+export const getSelectedNode = ({ graph, isSelected }: SelectedNodeParams): void => {
+  const { white, black, green } = styles;
+
+  return [...graph.children]
+    .forEach(({ children }) => [...children]
+      .forEach((child) => {
+        if (child instanceof HTMLElement) {
+          child.style.background = isSelected ? green : white;
+          child.style.color = isSelected ? white : black;
+        }
       }));
+};
 
-export const cleanNodes = (graph: HTMLDivElement|Element) => {
+export const cleanNodes = (graph: HTMLDivElement| Element): void => {
   cleanNodeLines(graph);
-  const nodes = [...graph.children];
+  const children = [...graph.children];
 
-  nodes.forEach((node: Element) => {
-    if ([...node.children].length) {
-      return cleanNodes(node);
+  children.forEach((child: Element) => {
+    if (children.length) {
+      return cleanNodes(child);
     }
 
-    nodes.forEach((child) => {
-      if (child.className && child.className !== "line") {
-        (child as HTMLElement).style.background = "#fff";
-        (child as HTMLElement).style.color = "#000";
-      }
-    });
+    if (child.className && child.className !== "line") {
+      child.removeAttribute("style");
+    }
   });
 };
 
-export const moveBlock = (childNode: HTMLElement, treeNode: Tree) => {
-  const previousElement = childNode?.previousElementSibling! as HTMLElement;
-  if (previousElement) moveBlock(previousElement, treeNode);
+export const changeBlockPosition = (child: HTMLElement | Element, treeNode: TreeParams): void => {
+  const { align, marginTop } = styles;
+  const previousElement = child?.previousElementSibling;
 
   if (previousElement) {
-    childNode.style.alignSelf = "stretch";
-    previousElement.style.alignSelf = "stretch";
-    childNode.style.marginTop = "15px";
-    previousElement.style.marginTop = "15px";
+    changeBlockPosition(previousElement, treeNode);
+  }
+  if (previousElement instanceof HTMLElement && child instanceof HTMLElement) {
+    child.style.alignSelf = align;
+    previousElement.style.alignSelf = align;
+    child.style.marginTop = marginTop;
+    previousElement.style.marginTop = marginTop;
   }
 };

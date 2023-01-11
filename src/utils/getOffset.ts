@@ -1,4 +1,6 @@
-export const getOffset = (element: HTMLElement) => {
+import { OffsetParams } from "../interfaces/interfaces";
+
+export const getOffset = (element: HTMLElement): OffsetParams => {
   const {
     top, left, width, height, right,
   }: DOMRect = element.getBoundingClientRect();
@@ -12,7 +14,7 @@ export const getOffset = (element: HTMLElement) => {
   };
 };
 
-export const connect = ({ element, targetElement }: Record<string, HTMLElement>) => {
+export const connect = ({ element, targetElement }: Record<string, HTMLElement>): string => {
   const offsetBlock1 = getOffset(targetElement);
   const offsetBlock2 = getOffset(element);
 

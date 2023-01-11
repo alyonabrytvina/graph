@@ -72,3 +72,11 @@ export interface TransformationRootParams {
     transformationIndex: number;
     selectNode: (event: MouseEvent<HTMLElement>, index: number) => void;
 }
+
+export interface OffsetParams {
+    top: number;
+    left: number;
+    right: number;
+    width: number;
+    height: number;
+}

@@ -3,25 +3,26 @@ import { DepthFirstSearch } from "../interfaces/interfaces";
 
 export const depthFirstSearch = ({
   graph, rootNode, tree,
-}: DepthFirstSearch) => {
-  const graphTreeNodes = [...graph]?.flatMap((nod) =>
-    [...nod.children]?.map((element) => element)); // get all grand children for current graph
+}: DepthFirstSearch): void => {
+  const graphTreeNodes = [...graph]?.flatMap((graphTree) =>
+    [...graphTree.children]?.map((child) => child)); // get all grand children for current graph
+
   const queue = [];
   queue.push(rootNode.id);
 
   let currentNode = queue[0];
-  let targetElement:HTMLElement;
-  let sibling:HTMLElement;
+  let targetElement: HTMLElement | undefined;
+  let sibling: HTMLElement | undefined;
 
-  tree.forEach((node) => {
-    if ("next" in node && currentNode === node.next) {
-      sibling = graphTreeNodes.find((element) => element.className === node.id)! as HTMLElement;
+  tree.forEach((nodeOfTree) => {
+    if ("next" in nodeOfTree && currentNode === nodeOfTree.next) {
+      sibling = graphTreeNodes.find((element) => element.className === nodeOfTree.id) as HTMLElement;
 
       targetElement = graphTreeNodes.find((element) => {
         if (currentNode === element.className) {
           return element;
         }
-      })! as HTMLElement;
+      }) as HTMLElement;
 
       if (targetElement && sibling) {
         targetElement.innerHTML += connect({
@@ -30,16 +31,16 @@ export const depthFirstSearch = ({
         });
       }
 
-      queue.push(node.id);
-      currentNode = node.id;
+      queue.push(nodeOfTree.id);
+      currentNode = nodeOfTree.id;
     }
 
-    if ("prev" in node) {
-      targetElement = graphTreeNodes.find((element) => element.className === node.id)! as HTMLElement;
+    if ("prev" in nodeOfTree) {
+      targetElement = graphTreeNodes.find((element) => element.className === nodeOfTree.id) as HTMLElement;
 
-      if (node.id === targetElement?.className) {
-        node.prev!.forEach((pr) => {
-          sibling = graphTreeNodes.find((element) => pr === element.className)! as HTMLElement;
+      if (nodeOfTree.id === targetElement?.className) {
+        nodeOfTree.prev?.forEach((node) => {
+          sibling = graphTreeNodes.find((element) => node === element.className) as HTMLElement;
 
           if (targetElement && sibling) {
             targetElement.innerHTML += connect({

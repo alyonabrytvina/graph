@@ -1,8 +1,8 @@
 import {
-  ActionItem, Mapping, NodesList,
-  SourceItem, Transformation, Tree,
+  ActionParams, Mapping, SourceParams,
+  TransformationParams, TreeParams,
 } from "../interfaces/interfaces";
-import { moveBlock } from "./getSelectedNode";
+import { changeBlockPosition } from "./getSelectedNode";
 
 export const cleanNodeLines = (node: HTMLDivElement|Element) =>
   [...node.children].forEach((childNode) => {
@@ -13,11 +13,11 @@ export const cleanNodeLines = (node: HTMLDivElement|Element) =>
     }
   });
 
-const getPrevNodes = (mapping: Mapping, nodes: (SourceItem | ActionItem)[], currentNode: SourceItem | ActionItem): (SourceItem | ActionItem)[] => {
+const getPrevNodes = (mapping: Mapping, nodes: (SourceParams | ActionParams)[], currentNode: SourceParams | ActionParams): (SourceParams | ActionParams)[] => {
   const prevNodes = [];
 
   if ("prev" in currentNode) {
-    currentNode.prev!.map((id: string) => {
+    currentNode.prev?.map((id: string) => {
       const actions = mapping.actions.filter((action) => action.id === id);
       const sources = mapping.sources.filter((source) => source.id === id);
       const nextNode = [...sources, ...actions][0];
@@ -31,16 +31,16 @@ const getPrevNodes = (mapping: Mapping, nodes: (SourceItem | ActionItem)[], curr
   return [...nodes, ...prevNodes];
 };
 
-export const getTransformations = (mapping: Mapping): Transformation[] => {
-  const transformations: Transformation[] = [];
+export const getTransformations = (mapping: Mapping): TransformationParams[] => {
+  const transformations: TransformationParams[] = [];
 
   mapping.targets.forEach((target) => {
     const lastAction = mapping.actions.find((_) => _.next === target.id);
 
     if (lastAction) {
       const prevNodes = getPrevNodes(mapping, [], lastAction);
-      const actions: ActionItem[] = [...new Set(prevNodes.filter((prevNode) => "prev" in prevNode) as ActionItem[])];
-      const sources: SourceItem[] = prevNodes.filter((prevNode) => "name" in prevNode) as SourceItem[];
+      const actions: ActionParams[] = [...new Set(prevNodes.filter((prevNode) => "prev" in prevNode) as ActionParams[])];
+      const sources: SourceParams[] = prevNodes.filter((prevNode) => "name" in prevNode) as SourceParams[];
 
       transformations.push({
         actions,
@@ -54,40 +54,32 @@ export const getTransformations = (mapping: Mapping): Transformation[] => {
 };
 
 export const getCurrentTransformations = (value:Mapping) => {
-  const initialTransformation = getTransformations(value);
-  if (initialTransformation) {
-    const transformations: Transformation[] = initialTransformation.map((props) => {
-      const { actions, target, sources } = props;
-      const reversedActions = [...actions].reverse();
+  const initialTransformations: TransformationParams[] = getTransformations(value);
 
-      return {
-        target,
-        sources,
-        actions: reversedActions,
-      };
-    });
-
-    const nodesList: NodesList[] = transformations.map((node, index) => ({
-      isSelected: false,
-      nodeIndex: index,
-    }));
+  return initialTransformations.map(({ actions, target, sources }) => {
+    const reversedActions: ActionParams[] = [...actions].reverse();
 
     return {
-      transformations,
-      nodesList,
+      target,
+      sources,
+      actions: reversedActions,
     };
-  }
+  });
 };
 
-export const getDeepestChildren = (graph:Element, treeNodes: Tree) => [...graph.children].forEach((childNode) => {
-  getDeepestChildren(childNode, treeNodes);
-  const { prev } = treeNodes;
-  prev?.forEach((node) => {
-    if (prev?.length > 1 && !node.startsWith("src")) {
-      if (node === childNode.className) {
+type GetDeepestChildrenParams = (graph: HTMLElement, treeNodes: TreeParams) => void;
+
+export const getDeepestChildren: GetDeepestChildrenParams = (graph, treeNodes) => [...graph.children].forEach((child) => {
+  if (child instanceof HTMLElement) {
+    getDeepestChildren(child, treeNodes);
+  }
+
+  const { prev: previousNodes } = treeNodes;
+  previousNodes?.forEach((node) => {
+    if (previousNodes?.length > 1 && !node.startsWith("src")) {
+      if (node === child.className) {
         cleanNodeLines(graph);
-        const child = childNode as HTMLElement;
-        moveBlock(child, treeNodes);
+        changeBlockPosition(child, treeNodes);
       }
     }
   });
